@@ -29,10 +29,13 @@ export const Timer = () => {
     }
     timerRef.current.mounted = true;
     return () => {
-      window.localStorage.setItem(LOCAL_STORAGE_KEY, timerRef.current.value);
       clearInterval(timeIntervalValue);
     };
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, timer);
+  }, [timer]);
 
   const onInputChange = (event) => {
     const value = event.target.value;
