@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import down_arrow from "../../assets/down_arrow.svg";
 import Comments from "../Comments";
 import { USER_REVIEWS } from "./helper";
@@ -6,12 +6,19 @@ import "./Reviews.scss";
 
 export const Reviews = () => {
   const reviewsRef = useRef();
+  const [activeIndex, setActiveIndex] = useState(1);
 
   const onLeftClick = () => {
+    if (activeIndex > 0) {
+      setActiveIndex((data) => data - 1);
+    }
     reviewsRef.current.scrollLeft -= reviewsRef.current.offsetWidth + 25;
   };
 
   const onRightClick = () => {
+    if (activeIndex < USER_REVIEWS.length - 1) {
+      setActiveIndex((data) => data + 1);
+    }
     reviewsRef.current.scrollLeft += reviewsRef.current.offsetWidth + 25;
   };
 
@@ -35,9 +42,8 @@ export const Reviews = () => {
         </div>
         <div ref={reviewsRef} className="oe-r-comments oe-hide-scrollbar">
           {USER_REVIEWS.map((data, index) => {
-            const className = data.isActive
-              ? "oe-r-comments-wrapper-active"
-              : "";
+            const className =
+              activeIndex === index ? "oe-r-comments-wrapper-active" : "";
             return <Comments key={index} {...data} className={className} />;
           })}
         </div>
