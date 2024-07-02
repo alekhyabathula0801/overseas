@@ -11,15 +11,15 @@ export const Reviews = () => {
   const onLeftClick = () => {
     if (activeIndex > 0) {
       setActiveIndex((data) => data - 1);
+      reviewsRef.current.scrollLeft -= reviewsRef.current.offsetWidth + 25;
     }
-    reviewsRef.current.scrollLeft -= reviewsRef.current.offsetWidth + 25;
   };
 
   const onRightClick = () => {
     if (activeIndex < USER_REVIEWS.length - 1) {
       setActiveIndex((data) => data + 1);
+      reviewsRef.current.scrollLeft += reviewsRef.current.offsetWidth + 25;
     }
-    reviewsRef.current.scrollLeft += reviewsRef.current.offsetWidth + 25;
   };
 
   return (
@@ -29,13 +29,17 @@ export const Reviews = () => {
         <div className="oe-r-navigator flex-between">
           <div
             onClick={onLeftClick}
-            className="oe-down-arrow-wrapper oe-r-n-left"
+            className={`oe-down-arrow-wrapper oe-r-n-left ${
+              activeIndex <= 0 ? `oe-rnw-disable` : ""
+            }`}
           >
             <img className="oe-down-arrow" src={down_arrow} alt="down-arrow" />
           </div>
           <div
             onClick={onRightClick}
-            className="oe-down-arrow-wrapper oe-r-n-right"
+            className={`oe-down-arrow-wrapper oe-r-n-right ${
+              activeIndex >= USER_REVIEWS.length - 1 ? `oe-rnw-disable` : ""
+            }`}
           >
             <img className="oe-down-arrow" src={down_arrow} alt="down-arrow" />
           </div>
